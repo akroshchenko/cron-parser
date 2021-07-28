@@ -13,6 +13,14 @@ type bounds struct {
 	max uint
 }
 
+func (b bounds) String() string {
+	return fmt.Sprintf("[from %d to %d]", b.min, b.max)
+}
+
+func (b bounds) include(i uint) bool {
+	return i >= b.min && i <= b.max
+}
+
 type field struct {
 	name    string
 	bounds  bounds
@@ -87,7 +95,7 @@ func Parse(cronStr string) (*schedule, error) {
 		}
 		r, err := getRange(fields[i], defaultSchedule[i].bounds)
 		if err != nil {
-			return nil, fmt.Errorf("Error to get range from field '%s': %v", fields[i], err)
+			return nil, fmt.Errorf("Error to get range from field (%s) '%s': %v", defaultSchedule[i].name, fields[i], err)
 		}
 		defaultSchedule[i].ranges = r
 	}
@@ -113,6 +121,9 @@ func getRange(f string, b bounds) ([]uint, error) {
 			if err != nil {
 				return nil, fmt.Errorf("Cannot convert %s to integer: %s", numb, err)
 			}
+			if !b.include(uint(number)) {
+				return nil, fmt.Errorf("Number %d is not within bounds: %s", number, b)
+			}
 			r[indx] = uint(number)
 		}
 		return r, nil
@@ -131,16 +142,21 @@ func getRange(f string, b bounds) ([]uint, error) {
 			return nil, fmt.Errorf("Cannot parse the min value of the %s", f)
 		}
 
+		if !b.include(uint(min)) {
+			return nil, fmt.Errorf("Number %d is not within bounds: %s", min, b)
+		}
+
 		max, err := strconv.Atoi(boarders[1])
 		if err != nil {
 			return nil, fmt.Errorf("Cannot parse the max value of the %s", f)
 		}
-		if min > max {
-			return nil, fmt.Errorf("Error: value on the left of '-' should be lover then on the right: %v", f)
+
+		if !b.include(uint(max)) {
+			return nil, fmt.Errorf("Number %d is not within bounds: %s", max, b)
 		}
 
-		if uint(min) < b.min || uint(min) > b.max || uint(max) < b.min || uint(max) > b.max {
-			return nil, fmt.Errorf("wrong field range: %s", f)
+		if min > max {
+			return nil, fmt.Errorf("Error: value on the left of '-' should be lover then on the right: %v", f)
 		}
 
 		r = make([]uint, ((max-min)/step)+1)
@@ -163,11 +179,17 @@ func getRange(f string, b bounds) ([]uint, error) {
 			if err != nil {
 				return nil, fmt.Errorf("Cannot parse %s: %s", f, err)
 			}
+			if !b.include(uint(parsedV)) {
+				return nil, fmt.Errorf("Number %d is not within bounds: %s", parsedV, b)
+			}
 			start = uint(parsedV)
 		}
 		parsedV, err := strconv.Atoi(boarders[1])
 		if err != nil {
 			return nil, fmt.Errorf("Cannot parse %s: %s", f, err)
+		}
+		if !b.include(uint(parsedV)) {
+			return nil, fmt.Errorf("Number %d is not within bounds: %s", parsedV, b)
 		}
 		step = uint(parsedV)
 
@@ -200,6 +222,9 @@ func getRange(f string, b bounds) ([]uint, error) {
 	n, err := strconv.Atoi(f)
 	if err != nil {
 		return nil, fmt.Errorf("Cannot parse value %s as a number", f)
+	}
+	if !b.include(uint(n)) {
+		return nil, fmt.Errorf("Number %d is not within bounds: %s", n, b)
 	}
 	return []uint{uint(n)}, nil
 }
