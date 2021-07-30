@@ -1,8 +1,9 @@
 package cron
 
-// TODO: document functions and structs
 // TOOD: write tests
+// TODO: check code coverage
 // TODO: add check for cases when day of month does get beyound the max days for this month
+// TODO: set up linters
 import (
 	"fmt"
 	"strconv"
@@ -84,6 +85,8 @@ func (f field) String() string {
 	return "" // Q: what should I return here?
 }
 
+// schedule defines the supproted structure of fields which should
+// be correctly parsed by Parse function.
 type schedule struct {
 	ranges  [5][]uint
 	command string
@@ -98,6 +101,9 @@ func (s schedule) String() string {
 	return strings.Join(result, "\n")
 }
 
+// Parse parses the input string that should contain valid cron expression. See the constants minuteKey,
+// hourKey etc to the number of supported fields to parse.
+// It returns the parsed schedule and erros if any.
 func Parse(inputExpr string) (*schedule, error) {
 
 	var scheduleSpec schedule
@@ -129,6 +135,7 @@ func Parse(inputExpr string) (*schedule, error) {
 
 }
 
+// getSequenceFromCommaEpr returns the time range for expression that uses comma(like n,n,n) to generate time sequence.
 func getSequenceFromCommaEpr(expr string, b bounds) ([]uint, error) {
 	var r []uint
 
@@ -147,6 +154,7 @@ func getSequenceFromCommaEpr(expr string, b bounds) ([]uint, error) {
 	return r, nil
 }
 
+// getSequenceFromCommaEpr returns the time range for expression that uses hifen(like n-n) to generate time sequence.
 func getSequenceFromHifenEpr(expr string, b bounds) ([]uint, error) {
 
 	var r []uint
@@ -184,6 +192,7 @@ func getSequenceFromHifenEpr(expr string, b bounds) ([]uint, error) {
 	return r, nil
 }
 
+// getSequenceFromCommaEpr return the time range for expression that uses slash(like n/n) to generate time sequence.
 func getSequenceFromSlashExpr(expr string, b bounds) ([]uint, error) {
 	var r []uint
 	boarders := strings.Split(expr, "/")
@@ -227,6 +236,7 @@ func getSequenceFromSlashExpr(expr string, b bounds) ([]uint, error) {
 	return r, nil
 }
 
+// getRange analyses what type was used to generate time sequence for the fields returns the timr range and errors if any.
 func getRange(f string, b bounds) ([]uint, error) {
 
 	var r []uint
