@@ -71,38 +71,38 @@ func fieldRangesEqual(a, b []uint) bool {
 	return true
 }
 
-func Test_getSequenceFromHifenEpr(t *testing.T) {
-	t.Errorf("Tests have not been implemented yet")
-}
-func Test_getSequenceFromSlashExpr(t *testing.T) {
-	t.Errorf("Tests have not been implemented yet")
-}
+// func Test_getSequenceFromHifenEpr(t *testing.T) {
+// 	t.Errorf("Tests have not been implemented yet")
+// }
+// func Test_getSequenceFromSlashExpr(t *testing.T) {
+// 	t.Errorf("Tests have not been implemented yet")
+// }
 
-func Test_getRange(t *testing.T) {
-	t.Errorf("Tests have not been implemented yet")
-}
+// func Test_getRange(t *testing.T) {
+// 	t.Errorf("Tests have not been implemented yet")
+// }
 
 // TODO: finish it
-func TestParse(t *testing.T) {
-	t.Errorf("Tests have not been implemented yet")
-	// cases := []struct{
-	// 	in string
-	// 	out schedule
-	// 	err error
-	// } {
-	// 	{
-	// 		args: "*/15 0 1,15 * 1-5 /usr/bin/find",
-	// 		exp: {
-	// 			ranges: [5][]uint{
-	// 				[]uint{0, 15, 30, 45},
-	// 				[]uint{0},
-	// 				[]uint{1, 15},
-	// 				[]uint{1,2,3,4,5,6,7,8,9,10,11,12},
-	// 				[]uint{0, 15, 30, 45},
-	// 			},
-	// 			command: "/usr/bin/find",
-	// 		},
-	// 		err: nil,
-	// 	},
-	// }
-}
+// func TestParse(t *testing.T) {
+// 	t.Errorf("Tests have not been implemented yet")
+// 	// cases := []struct{
+// 	// 	in string
+// 	// 	out schedule
+// 	// 	err error
+// 	// } {
+// 	// 	{
+// 	// 		args: "*/15 0 1,15 * 1-5 /usr/bin/find",
+// 	// 		exp: {
+// 	// 			ranges: [5][]uint{
+// 	// 				[]uint{0, 15, 30, 45},
+// 	// 				[]uint{0},
+// 	// 				[]uint{1, 15},
+// 	// 				[]uint{1,2,3,4,5,6,7,8,9,10,11,12},
+// 	// 				[]uint{0, 15, 30, 45},
+// 	// 			},
+// 	// 			command: "/usr/bin/find",
+// 	// 		},
+// 	// 		err: nil,
+// 	// 	},
+// 	// }
+// }
