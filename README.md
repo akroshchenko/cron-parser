@@ -23,7 +23,7 @@ IMPORTANT: Program may not correcly work with days of the month. It does not che
 ---
 
 Example:
-
+```
 cron-parser ＂*/15 0 1,15 * 1-5 /usr/bin/find"
 
 Output:
@@ -33,7 +33,7 @@ day of month  1 15
 month         1 2 3 4 5 6 7 8 9 10 11 12
 day of week   1 2 3 4 5
 command       /usr/bin/find
-
+```
 
 ### Other
 
