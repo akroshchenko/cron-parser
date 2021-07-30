@@ -60,7 +60,7 @@ func (f field) bounds() bounds {
 	case dayOfWeekKey:
 		return dayOfWeekBounds
 	}
-	return bounds{} // Q: what should I return here?
+	return bounds{}
 }
 
 func (f field) String() string {
@@ -79,7 +79,7 @@ func (f field) String() string {
 		return "command"
 	}
 
-	return "" // Q: what should I return here?
+	return ""
 }
 
 // schedule defines the supproted structure of fields which should
