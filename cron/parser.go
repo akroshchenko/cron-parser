@@ -1,9 +1,6 @@
 package cron
 
-// TOOD: write tests
-// TODO: check code coverage
 // TODO: add check for cases when day of month does get beyound the max days for this month
-// TODO: set up linters
 
 import (
 	"fmt"
