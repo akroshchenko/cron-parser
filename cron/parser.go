@@ -4,6 +4,7 @@ package cron
 // TODO: check code coverage
 // TODO: add check for cases when day of month does get beyound the max days for this month
 // TODO: set up linters
+
 import (
 	"fmt"
 	"strconv"
@@ -49,7 +50,6 @@ const (
 	commandKey
 )
 
-// Q: is it ok to have type and methods of the same name?
 func (f field) bounds() bounds {
 	switch f {
 	case minuteKey:
@@ -259,7 +259,7 @@ func getRange(f string, b bounds) ([]uint, error) {
 	}
 
 	if len(f) == 1 && f == "*" {
-		r = make([]uint, b.max()-b.min())
+		r = make([]uint, b.max()-b.min()+1)
 		current := b.min()
 		for i := 0; i < len(r); i++ {
 			if current > b.max() {
